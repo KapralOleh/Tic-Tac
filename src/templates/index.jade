@@ -1,0 +1,41 @@
+doctype
+html
+  head
+    title Tic-Tac
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=1')
+    link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css')
+    link(rel="stylesheet",href="/css/libs.css")
+    link(rel="stylesheet",href="css.min.css")
+  body
+    .container
+      header#header
+        h1#h1  Tic - Tac
+        .button#toogleTheme Toogle Theme
+        .turn
+          .player.cell-x
+      .vertical-align-helper
+      h1.winner#clic 
+      #board
+        .board.first-board
+          .cell
+          .cell
+          .cell
+          .cell
+          .cell
+          .cell
+          .cell
+          .cell
+          .cell
+        //- #second-board
+        //-   .cell
+        //-   .cell
+        //-   .cell
+        //-   .cell
+        //-   .cell
+        //-   .cell
+        //-   .cell
+        //-   .cell
+        //-   .cell
+    script(type="text/javascript" src="/js/libs.js")
+    script(type="text/javascript" src="all.min.js")
