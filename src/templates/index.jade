@@ -5,9 +5,10 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=1')
     link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css')
-    link(rel="stylesheet",href="/css/libs.css")
+    //- link(rel="stylesheet",href="/css/libs.css")
     link(rel="stylesheet",href="css.min.css")
   body
+    .overlay
     .container
       header#header
         h1#h1  Tic - Tac
@@ -18,24 +19,15 @@ html
       h1.winner#clic 
       #board
         .board.first-board
-          .cell
-          .cell
-          .cell
-          .cell
-          .cell
-          .cell
-          .cell
-          .cell
-          .cell
-        //- #second-board
-        //-   .cell
-        //-   .cell
-        //-   .cell
-        //-   .cell
-        //-   .cell
-        //-   .cell
-        //-   .cell
-        //-   .cell
-        //-   .cell
-    script(type="text/javascript" src="/js/libs.js")
+          .cell#cell0(data-id="cell")
+          .cell#cell1(data-id="cell")
+          .cell#cell2(data-id="cell")
+          .cell#cell3(data-id="cell")
+          .cell#cell4(data-id="cell")
+          .cell#cell5(data-id="cell")
+          .cell#cell6(data-id="cell")
+          .cell#cell7(data-id="cell")
+          .cell#cell8(data-id="cell")
+    //- script(type="text/javascript" src="/js/libs.js")
+    script(type="text/javascript" src="/socket.io/socket.io.js")
     script(type="text/javascript" src="all.min.js")

@@ -1,3 +1,4 @@
+var socket = io();
 var boardDOM, boardJS, selected, turn, winningCombo, boardDOMEl, winner, text;
 winner = false;
 turn = true;
@@ -62,18 +63,29 @@ var checkWin = function (boardJS,winningCombo) {
         }).length == winningCombo[i].length){
           document.getElementsByClassName('winner')[0].innerHTML = "Player O WIN";
           winner = true;
-          for (var j = 0; j < winningCombo[i].length; i++) {
-            boardDOM[winningCombo[i][j]].style.color = "red";
+          for (var j = 0; j < winningCombo[i].length; j++) {
+            boardDOM[(winningCombo[i][j])-1].style.backgroundColor = "#51c8c8";
           }
         }
       }
     }
 }
 
-var setToken = function(node, token) {
-  return node.classList.add(token);
+var setToken = function(node, token, id) {
+  boardDOM[id].classList.add(token);
+  socket.emit('move',{
+                      id: id,
+                      token: token, 
+                      boardJS: boardJS, 
+                      winningCombo: winningCombo
+                    });
+  // return node.classList.add(token);
 };
 
+ socket.on('move', function(obj){
+    boardDOM[obj.id].classList.add(obj.token);
+    checkWin(obj.boardJS,obj.winningCombo);
+  });
 
 document.getElementsByClassName('winner')[0].onmouseover = function () {
   text = document.getElementsByClassName('winner')[0].innerHTML;
@@ -86,11 +98,11 @@ document.getElementsByClassName('winner')[0].onclick = function () {
   window.location.reload();
 }
 
-
 for (var i=0; i<boardDOM.length; i++) {
   (function(i){
     boardDOM[i].onclick = function(e) {
       var target = e.target;
+      var id = target.id.slice(4);
       token = 'cell-x';
       if (target.classList.contains('cell-x') || target.classList.contains('cell-o') || winner == true) {
         return false;
@@ -107,15 +119,16 @@ for (var i=0; i<boardDOM.length; i++) {
       }
 
       turn = !turn;
-        if (turn) {
-          document.querySelector('.turn>.player').classList.remove('cell-o');
-          document.querySelector('.turn>.player').classList.add('cell-x');
-        } else {
-          document.querySelector('.turn>.player').classList.remove('cell-x');
-          document.querySelector('.turn>.player').classList.add('cell-o');
-        }
+      if (turn) {
+        document.querySelector('.turn>.player').classList.remove('cell-o');
+        document.querySelector('.turn>.player').classList.add('cell-x');
+      } else {
+        document.querySelector('.turn>.player').classList.remove('cell-x');
+        document.querySelector('.turn>.player').classList.add('cell-o');
+      }
 
-      setToken(target, token);
+      setToken(target, token, id);
+      
       return checkWin(boardJS,winningCombo);
     };
   })(i);
